@@ -1,0 +1,33 @@
+{
+  "name": "Notik",
+  "short_name": "Notik",
+  "description": "Daily notes with calendar organization",
+  "start_url": "/app",
+  "display": "standalone",
+  "background_color": "#fafafa",
+  "theme_color": "#7c3aed",
+  "orientation": "any",
+  "categories": ["productivity", "utilities"],
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "New Note",
+      "url": "/app",
+      "description": "Create a new note"
+    }
+  ]
+}
