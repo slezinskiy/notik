@@ -1,0 +1,119 @@
+{
+  "common": {
+    "appName": "Notik",
+    "notes": "нотаток",
+    "tags": "тегів",
+    "words": "слів",
+    "install": "Встановити",
+    "untitled": "Без назви",
+    "saving": "Збереження...",
+    "close": "Закрити"
+  },
+  "auth": {
+    "welcome": "Ласкаво просимо до Notik",
+    "tagline": "Ваш щоденник нотаток",
+    "email": "Електронна пошта",
+    "password": "Пароль",
+    "name": "Ім'я",
+    "signIn": "Увійти",
+    "signingIn": "Вхід...",
+    "signOut": "Вийти",
+    "register": "Зареєструватися",
+    "createAccount": "Створити обліковий запис",
+    "creating": "Створення...",
+    "createAccountButton": "Створити обліковий запис",
+    "startTakingNotes": "Почніть вести нотатки з Notik",
+    "noAccount": "Немає облікового запису?",
+    "hasAccount": "Вже маєте обліковий запис?",
+    "invalidCredentials": "Невірна пошта або пароль",
+    "registrationFailed": "Помилка реєстрації"
+  },
+  "sidebar": {
+    "searchPlaceholder": "Пошук нотаток...",
+    "notesTab": "Нотатки",
+    "trashTab": "Кошик",
+    "trashEmpty": "Кошик порожній",
+    "noNotesForDay": "Немає нотаток на цей день",
+    "restore": "Відновити",
+    "closeSidebar": "Закрити бокову панель"
+  },
+  "calendar": {
+    "prevMonth": "Попередній місяць",
+    "nextMonth": "Наступний місяць"
+  },
+  "editor": {
+    "noNoteSelected": "Нотатку не обрано",
+    "selectOrCreate": "Оберіть нотатку або створіть нову",
+    "titlePlaceholder": "Назва нотатки",
+    "contentPlaceholder": "Почніть писати...",
+    "addTag": "Додати тег...",
+    "deleteNote": "Видалити нотатку"
+  },
+  "toolbar": {
+    "bold": "Жирний",
+    "italic": "Курсив",
+    "underline": "Підкреслення",
+    "strikethrough": "Закреслення",
+    "heading1": "Заголовок 1",
+    "heading2": "Заголовок 2",
+    "bulletList": "Маркований список",
+    "numberedList": "Нумерований список",
+    "quote": "Цитата",
+    "link": "Посилання",
+    "image": "Зображення",
+    "codeBlock": "Блок коду",
+    "preview": "Перемкнути попередній перегляд",
+    "linkPrompt": "Введіть URL"
+  },
+  "header": {
+    "openSidebar": "Відкрити бокову панель",
+    "versionHistory": "Історія версій",
+    "exportNotes": "Експорт нотаток",
+    "toggleTheme": "Перемкнути тему",
+    "changeLanguage": "Змінити мову"
+  },
+  "search": {
+    "title": "Пошук нотаток",
+    "placeholder": "Пошук за назвою, вмістом або тегами...",
+    "noResults": "Нічого не знайдено",
+    "shortcutHint": "Натисніть Ctrl+K для пошуку"
+  },
+  "export": {
+    "title": "Експорт / Імпорт",
+    "description": "Експортуйте нотатки в markdown або імпортуйте з файлів",
+    "scope": "Область експорту",
+    "scopeNote": "Нотатка",
+    "scopeDay": "День",
+    "scopeMonth": "Місяць",
+    "scopeAll": "Усе",
+    "exportButton": "Експорт",
+    "import": "Імпорт"
+  },
+  "history": {
+    "title": "Історія версій",
+    "selectNote": "Оберіть нотатку для перегляду історії",
+    "noRevisions": "Ще немає ревізій",
+    "compare": "Порівняти",
+    "restore": "Відновити",
+    "comparison": "Порівняння",
+    "currentTitle": "Поточна назва",
+    "revisionTitle": "Назва ревізії",
+    "revisionContent": "Вміст ревізії"
+  },
+  "pwa": {
+    "installTitle": "Встановити Notik",
+    "installDescription": "Додайте на головний екран для офлайн-доступу"
+  },
+  "offline": {
+    "title": "Ви офлайн",
+    "description": "Notik працює без інтернету. Нотатки зберігаються локально та синхронізуються після підключення.",
+    "goToNotes": "До нотаток"
+  },
+  "fab": {
+    "createNote": "Створити нотатку"
+  },
+  "language": {
+    "en": "English",
+    "uk": "Українська"
+  }
+}

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Download, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "@/lib/i18n/use-translation";
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -12,6 +13,7 @@ interface BeforeInstallPromptEvent extends Event {
 export function InstallPrompt() {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [dismissed, setDismissed] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const handler = (e: Event) => {
@@ -35,11 +37,11 @@ export function InstallPrompt() {
     <div className="fixed bottom-20 left-4 right-4 z-50 mx-auto flex max-w-md items-center gap-3 rounded-xl border bg-background p-4 shadow-lg md:bottom-8 md:left-auto md:right-8">
       <Download className="h-5 w-5 shrink-0 text-primary" />
       <div className="flex-1">
-        <p className="text-sm font-medium">Install Notik</p>
-        <p className="text-xs text-muted-foreground">Add to your home screen for offline access</p>
+        <p className="text-sm font-medium">{t("pwa.installTitle")}</p>
+        <p className="text-xs text-muted-foreground">{t("pwa.installDescription")}</p>
       </div>
       <Button size="sm" onClick={handleInstall}>
-        Install
+        {t("common.install")}
       </Button>
       <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setDismissed(true)}>
         <X className="h-4 w-4" />

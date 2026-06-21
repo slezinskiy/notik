@@ -6,6 +6,7 @@ import {
   filterNotesByTag,
 } from "@/lib/search/fuse-search";
 import { countWords, toDateKey, generateId } from "@/lib/utils";
+import { getUntitledTitle } from "@/lib/stores/locale-store";
 import { queueNoteSync } from "@/lib/sync/sync-manager";
 
 interface NotesState {
@@ -139,7 +140,7 @@ export const useNotesStore = create<NotesState>((set, get) => ({
     const date = noteDate ?? get().selectedDate;
     const note: Note = {
       id: generateId(),
-      title: "Untitled",
+      title: getUntitledTitle(),
       content: "",
       tags: [],
       createdAt: new Date(),

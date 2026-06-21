@@ -20,6 +20,7 @@ export function AppInitializer() {
           setNotes(notes);
         }
       })
+      .catch(console.error)
       .finally(() => setIsLoading(false));
 
     const stopSync = startAutoSync();

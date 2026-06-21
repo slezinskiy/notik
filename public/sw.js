@@ -1,7 +1,5 @@
-const CACHE_NAME = "notik-v1";
+const CACHE_NAME = "notik-v2";
 const STATIC_ASSETS = [
-  "/",
-  "/app",
   "/offline",
   "/manifest.json",
   "/icons/icon.svg",
@@ -28,8 +26,10 @@ self.addEventListener("fetch", (event) => {
 
   if (request.method !== "GET") return;
 
-  if (request.url.includes("/api/")) {
-    event.respondWith(networkFirst(request));
+  const url = new URL(request.url);
+
+  // Never cache API or auth routes — prevents stale/error JSON breaking the app
+  if (url.pathname.startsWith("/api/")) {
     return;
   }
 
@@ -42,7 +42,7 @@ async function cacheFirst(request) {
 
   try {
     const response = await fetch(request);
-    if (response.ok) {
+    if (response.ok && shouldCache(request)) {
       const cache = await caches.open(CACHE_NAME);
       cache.put(request, response.clone());
     }
@@ -56,28 +56,17 @@ async function cacheFirst(request) {
   }
 }
 
-async function networkFirst(request) {
-  try {
-    const response = await fetch(request);
-    if (response.ok) {
-      const cache = await caches.open(CACHE_NAME);
-      cache.put(request, response.clone());
-    }
-    return response;
-  } catch {
-    const cached = await caches.match(request);
-    if (cached) return cached;
-    return new Response(JSON.stringify({ error: "Offline" }), {
-      status: 503,
-      headers: { "Content-Type": "application/json" },
-    });
-  }
+function shouldCache(request) {
+  const url = new URL(request.url);
+  return (
+    url.pathname.startsWith("/_next/static/") ||
+    url.pathname.startsWith("/icons/") ||
+    url.pathname === "/manifest.json"
+  );
 }
 
 self.addEventListener("sync", (event) => {
   if (event.tag === "notik-sync") {
-    event.waitUntil(
-      fetch("/api/sync", { method: "GET" }).catch(() => {})
-    );
+    event.waitUntil(fetch("/api/sync", { method: "GET" }).catch(() => {}));
   }
 });

@@ -8,8 +8,10 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { useNotesStore } from "@/lib/stores/notes-store";
 import { useFilteredNotes } from "@/lib/hooks/use-notes-selectors";
+import { useTranslation } from "@/lib/i18n/use-translation";
 
 export function NotesList() {
+  const { t } = useTranslation();
   const notes = useFilteredNotes();
   const selectedNoteId = useNotesStore((s) => s.selectedNoteId);
   const setSelectedNoteId = useNotesStore((s) => s.setSelectedNoteId);
@@ -25,10 +27,10 @@ export function NotesList() {
     <div className="flex flex-1 flex-col overflow-hidden border-t">
       <div className="space-y-2 p-3">
         <Input
-          placeholder="Search notes..."
+          placeholder={t("sidebar.searchPlaceholder")}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          aria-label="Search notes"
+          aria-label={t("sidebar.searchPlaceholder")}
         />
         <div className="flex items-center gap-2">
           <button
@@ -40,7 +42,7 @@ export function NotesList() {
             )}
           >
             <FileText className="h-3.5 w-3.5" />
-            Notes
+            {t("sidebar.notesTab")}
           </button>
           <button
             type="button"
@@ -51,7 +53,7 @@ export function NotesList() {
             )}
           >
             <Trash2 className="h-3.5 w-3.5" />
-            Trash
+            {t("sidebar.trashTab")}
           </button>
         </div>
         {activeTagFilter && (
@@ -69,7 +71,7 @@ export function NotesList() {
         <div className="space-y-1 p-2">
           {notes.length === 0 ? (
             <p className="px-2 py-8 text-center text-sm text-muted-foreground">
-              {showTrash ? "Trash is empty" : "No notes for this day"}
+              {showTrash ? t("sidebar.trashEmpty") : t("sidebar.noNotesForDay")}
             </p>
           ) : (
             notes.map((note) => (
@@ -84,7 +86,7 @@ export function NotesList() {
                     : "hover:bg-accent border border-transparent"
                 )}
               >
-                <h3 className="truncate text-sm font-medium">{note.title || "Untitled"}</h3>
+                <h3 className="truncate text-sm font-medium">{note.title || t("common.untitled")}</h3>
                 <p className="mt-0.5 text-xs text-muted-foreground">
                   {format(new Date(note.createdAt), "HH:mm")}
                 </p>
@@ -98,7 +100,7 @@ export function NotesList() {
                         restoreNote(note.id);
                       }}
                     >
-                      Restore
+                      {t("sidebar.restore")}
                     </button>
                   </div>
                 ) : (

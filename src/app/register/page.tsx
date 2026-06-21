@@ -6,9 +6,12 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useTranslation } from "@/lib/i18n/use-translation";
+import { LanguageSwitcher } from "@/components/layout/language-switcher";
 
 export default function RegisterPage() {
   const router = useRouter();
+  const { t } = useTranslation();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,7 +31,7 @@ export default function RegisterPage() {
 
     if (!res.ok) {
       const data = await res.json();
-      setError(data.error ?? "Registration failed");
+      setError(typeof data.error === "string" ? data.error : t("auth.registrationFailed"));
       setLoading(false);
       return;
     }
@@ -38,10 +41,13 @@ export default function RegisterPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background p-4">
+      <div className="absolute right-4 top-4">
+        <LanguageSwitcher variant="full" />
+      </div>
       <div className="w-full max-w-md space-y-6">
         <div className="text-center">
-          <h1 className="text-2xl font-bold">Create Account</h1>
-          <p className="mt-1 text-sm text-muted-foreground">Start taking notes with Notik</p>
+          <h1 className="text-2xl font-bold">{t("auth.createAccount")}</h1>
+          <p className="mt-1 text-sm text-muted-foreground">{t("auth.startTakingNotes")}</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4 rounded-xl border p-6 shadow-sm">
@@ -49,11 +55,11 @@ export default function RegisterPage() {
             <div className="rounded-lg bg-destructive/10 p-3 text-sm text-destructive">{error}</div>
           )}
           <div className="space-y-2">
-            <Label htmlFor="name">Name</Label>
+            <Label htmlFor="name">{t("auth.name")}</Label>
             <Input id="name" value={name} onChange={(e) => setName(e.target.value)} required />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">{t("auth.email")}</Label>
             <Input
               id="email"
               type="email"
@@ -63,7 +69,7 @@ export default function RegisterPage() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">{t("auth.password")}</Label>
             <Input
               id="password"
               type="password"
@@ -74,14 +80,14 @@ export default function RegisterPage() {
             />
           </div>
           <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? "Creating..." : "Create account"}
+            {loading ? t("auth.creating") : t("auth.createAccountButton")}
           </Button>
         </form>
 
         <p className="text-center text-sm text-muted-foreground">
-          Already have an account?{" "}
+          {t("auth.hasAccount")}{" "}
           <Link href="/login" className="font-medium text-primary hover:underline">
-            Sign in
+            {t("auth.signIn")}
           </Link>
         </p>
       </div>

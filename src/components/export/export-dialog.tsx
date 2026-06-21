@@ -7,6 +7,8 @@ import { Label } from "@/components/ui/label";
 import { useNotesStore } from "@/lib/stores/notes-store";
 import { useSelectedNote } from "@/lib/hooks/use-notes-selectors";
 import { useUIStore } from "@/lib/stores/ui-store";
+import { useTranslation } from "@/lib/i18n/use-translation";
+import type { TranslationKey } from "@/lib/i18n/config";
 import {
   singleNoteToMarkdown,
   dayNotesToMarkdown,
@@ -17,6 +19,13 @@ import { toMarkdownFilename } from "@/lib/utils";
 import JSZip from "jszip";
 import type { ExportScope } from "@/types/note";
 
+const scopeKeys: Record<ExportScope, TranslationKey> = {
+  note: "export.scopeNote",
+  day: "export.scopeDay",
+  month: "export.scopeMonth",
+  all: "export.scopeAll",
+};
+
 export function ExportDialog() {
   const exportOpen = useUIStore((s) => s.exportOpen);
   const setExportOpen = useUIStore((s) => s.setExportOpen);
@@ -24,6 +33,7 @@ export function ExportDialog() {
   const selectedNote = useSelectedNote();
   const selectedDate = useNotesStore((s) => s.selectedDate);
   const [scope, setScope] = useState<ExportScope>("day");
+  const { t } = useTranslation();
 
   const downloadFile = (content: string, filename: string) => {
     const blob = new Blob([content], { type: "text/markdown" });
@@ -50,7 +60,10 @@ export function ExportDialog() {
         const d = new Date(n.noteDate);
         return d.getMonth() === selectedDate.getMonth() && d.getFullYear() === selectedDate.getFullYear();
       });
-      downloadFile(monthNotesToMarkdown(monthNotes, selectedDate), `notes_${selectedDate.getMonth() + 1}_${selectedDate.getFullYear()}.md`);
+      downloadFile(
+        monthNotesToMarkdown(monthNotes, selectedDate),
+        `notes_${selectedDate.getMonth() + 1}_${selectedDate.getFullYear()}.md`
+      );
     } else if (scope === "all") {
       const zip = new JSZip();
       const byDay = new Map<string, typeof activeNotes>();
@@ -107,13 +120,13 @@ export function ExportDialog() {
     <Dialog open={exportOpen} onOpenChange={setExportOpen}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Export / Import</DialogTitle>
-          <DialogDescription>Export notes as markdown or import from files</DialogDescription>
+          <DialogTitle>{t("export.title")}</DialogTitle>
+          <DialogDescription>{t("export.description")}</DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4">
           <div className="space-y-2">
-            <Label>Export scope</Label>
+            <Label>{t("export.scope")}</Label>
             <div className="grid grid-cols-2 gap-2">
               {(["note", "day", "month", "all"] as ExportScope[]).map((s) => (
                 <Button
@@ -123,18 +136,18 @@ export function ExportDialog() {
                   onClick={() => setScope(s)}
                   disabled={s === "note" && !selectedNote}
                 >
-                  {s.charAt(0).toUpperCase() + s.slice(1)}
+                  {t(scopeKeys[s])}
                 </Button>
               ))}
             </div>
           </div>
 
           <Button onClick={handleExport} className="w-full">
-            Export
+            {t("export.exportButton")}
           </Button>
 
           <div className="space-y-2">
-            <Label>Import</Label>
+            <Label>{t("export.import")}</Label>
             <input
               type="file"
               accept=".md,.zip"

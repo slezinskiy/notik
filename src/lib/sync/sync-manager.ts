@@ -9,6 +9,7 @@ import {
   setMeta,
 } from "@/lib/sync/indexed-db";
 import { generateId } from "@/lib/utils";
+import { normalizeNotes } from "@/lib/notes/normalize";
 
 export async function queueNoteSync(
   note: Note,
@@ -77,22 +78,23 @@ export async function syncWithServer(): Promise<{ synced: number; conflicts: num
 }
 
 export async function pullFromServer(): Promise<Note[]> {
-  if (!navigator.onLine) return [];
+  if (typeof navigator === "undefined" || !navigator.onLine) return [];
 
-  const response = await fetch("/api/notes");
-  if (!response.ok) return [];
+  try {
+    const response = await fetch("/api/notes", { cache: "no-store" });
+    if (!response.ok) return [];
 
-  const notes: Note[] = await response.json();
-  const parsed = notes.map((n) => ({
-    ...n,
-    createdAt: new Date(n.createdAt),
-    updatedAt: new Date(n.updatedAt),
-    noteDate: new Date(n.noteDate),
-    deletedAt: n.deletedAt ? new Date(n.deletedAt) : null,
-  }));
+    const data: unknown = await response.json();
+    const parsed = normalizeNotes(data);
 
-  await bulkSaveNotesLocally(parsed);
-  return parsed;
+    if (parsed.length > 0) {
+      await bulkSaveNotesLocally(parsed);
+    }
+
+    return parsed;
+  } catch {
+    return [];
+  }
 }
 
 export function startAutoSync(intervalMs = 30_000): () => void {

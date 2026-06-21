@@ -18,6 +18,9 @@ export function formatDayHeader(date: Date | string): string {
 
 export function toDateKey(date: Date | string): string {
   const d = typeof date === "string" ? new Date(date) : date;
+  if (Number.isNaN(d.getTime())) {
+    return format(startOfDay(new Date()), "yyyy-MM-dd");
+  }
   return format(startOfDay(d), "yyyy-MM-dd");
 }
 

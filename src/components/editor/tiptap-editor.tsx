@@ -13,19 +13,21 @@ import { Button } from "@/components/ui/button";
 import { useNotesStore } from "@/lib/stores/notes-store";
 import { useSelectedNote } from "@/lib/hooks/use-notes-selectors";
 import { useUIStore } from "@/lib/stores/ui-store";
+import { useTranslation } from "@/lib/i18n/use-translation";
 import { debounce } from "@/lib/utils";
 import { marked } from "marked";
 import type { Note } from "@/types/note";
 
 export function TipTapEditor() {
   const selectedNote = useSelectedNote();
+  const { t } = useTranslation();
 
   if (!selectedNote) {
     return (
       <div className="flex flex-1 items-center justify-center text-muted-foreground">
         <div className="text-center">
-          <p className="text-lg font-medium">No note selected</p>
-          <p className="mt-1 text-sm">Select a note or create a new one</p>
+          <p className="text-lg font-medium">{t("editor.noNoteSelected")}</p>
+          <p className="mt-1 text-sm">{t("editor.selectOrCreate")}</p>
         </div>
       </div>
     );
@@ -38,6 +40,7 @@ function NoteEditor({ note }: { note: Note }) {
   const updateNote = useNotesStore((s) => s.updateNote);
   const setIsSaving = useNotesStore((s) => s.setIsSaving);
   const previewMode = useUIStore((s) => s.previewMode);
+  const { t } = useTranslation();
 
   const debouncedSave = useMemo(
     () =>
@@ -55,7 +58,7 @@ function NoteEditor({ note }: { note: Note }) {
       Underline,
       Link.configure({ openOnClick: false }),
       Image,
-      Placeholder.configure({ placeholder: "Start writing..." }),
+      Placeholder.configure({ placeholder: t("editor.contentPlaceholder") }),
     ],
     content: note.content || "",
     onUpdate: ({ editor: ed }) => {
@@ -120,15 +123,15 @@ function NoteEditor({ note }: { note: Note }) {
             updateNote(note.id, { title: e.target.value });
           }}
           className="flex-1 bg-transparent text-2xl font-bold focus:outline-none"
-          placeholder="Note title"
-          aria-label="Note title"
+          placeholder={t("editor.titlePlaceholder")}
+          aria-label={t("editor.titlePlaceholder")}
         />
         <Button
           variant="ghost"
           size="icon"
           className="text-muted-foreground hover:text-destructive"
           onClick={() => useNotesStore.getState().deleteNote(note.id)}
-          aria-label="Delete note"
+          aria-label={t("editor.deleteNote")}
         >
           <Trash2 className="h-4 w-4" />
         </Button>
@@ -145,6 +148,7 @@ function NoteEditor({ note }: { note: Note }) {
 function TagInput({ noteId, tags }: { noteId: string; tags: string[] }) {
   const updateNote = useNotesStore((s) => s.updateNote);
   const setActiveTagFilter = useNotesStore((s) => s.setActiveTagFilter);
+  const { t } = useTranslation();
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -180,10 +184,10 @@ function TagInput({ noteId, tags }: { noteId: string; tags: string[] }) {
       ))}
       <input
         type="text"
-        placeholder="Add tag..."
+        placeholder={t("editor.addTag")}
         className="min-w-[100px] flex-1 bg-transparent text-sm focus:outline-none"
         onKeyDown={handleKeyDown}
-        aria-label="Add tag"
+        aria-label={t("editor.addTag")}
       />
     </div>
   );

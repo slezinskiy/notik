@@ -11,12 +11,14 @@ import { HistoryDialog } from "@/components/history/history-dialog";
 import { InstallPrompt } from "@/components/pwa/install-prompt";
 import { AppInitializer } from "@/components/providers/app-initializer";
 import { useNotesStore } from "@/lib/stores/notes-store";
+import { useTranslation } from "@/lib/i18n/use-translation";
 import { Loader2 } from "lucide-react";
 
 export function AppShell() {
   const [mounted, setMounted] = useState(false);
   const isLoading = useNotesStore((s) => s.isLoading);
   const isSaving = useNotesStore((s) => s.isSaving);
+  const { t } = useTranslation();
 
   useEffect(() => {
     setMounted(true);
@@ -45,7 +47,7 @@ export function AppShell() {
         )}
         {isSaving && (
           <div className="fixed bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-muted px-3 py-1 text-xs text-muted-foreground">
-            Saving...
+            {t("common.saving")}
           </div>
         )}
       </main>

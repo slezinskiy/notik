@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { useUIStore } from "@/lib/stores/ui-store";
 import { useNotesStore } from "@/lib/stores/notes-store";
 import { useSelectedNote } from "@/lib/hooks/use-notes-selectors";
+import { useTranslation } from "@/lib/i18n/use-translation";
+import { getDateLocale } from "@/lib/i18n/date-locale";
 import type { NoteRevision } from "@/types/note";
 
 export function HistoryDialog() {
@@ -16,6 +18,8 @@ export function HistoryDialog() {
   const updateNote = useNotesStore((s) => s.updateNote);
   const [revisions, setRevisions] = useState<NoteRevision[]>([]);
   const [compareId, setCompareId] = useState<string | null>(null);
+  const { t, locale } = useTranslation();
+  const dateLocale = getDateLocale(locale);
 
   useEffect(() => {
     if (!historyOpen || !selectedNote) return;
@@ -48,32 +52,29 @@ export function HistoryDialog() {
     <Dialog open={historyOpen} onOpenChange={setHistoryOpen}>
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle>Version History</DialogTitle>
+          <DialogTitle>{t("history.title")}</DialogTitle>
         </DialogHeader>
 
         {!selectedNote ? (
-          <p className="text-sm text-muted-foreground">Select a note to view history</p>
+          <p className="text-sm text-muted-foreground">{t("history.selectNote")}</p>
         ) : (
           <div className="grid max-h-[400px] gap-4 overflow-auto md:grid-cols-2">
             <div className="space-y-2">
               {revisions.length === 0 ? (
-                <p className="text-sm text-muted-foreground">No revisions yet</p>
+                <p className="text-sm text-muted-foreground">{t("history.noRevisions")}</p>
               ) : (
                 revisions.map((rev) => (
-                  <div
-                    key={rev.id}
-                    className="rounded-lg border p-3"
-                  >
+                  <div key={rev.id} className="rounded-lg border p-3">
                     <p className="text-sm font-medium">{rev.title}</p>
                     <p className="text-xs text-muted-foreground">
-                      {format(new Date(rev.createdAt), "dd MMM yyyy HH:mm")}
+                      {format(new Date(rev.createdAt), "dd MMM yyyy HH:mm", { locale: dateLocale })}
                     </p>
                     <div className="mt-2 flex gap-2">
                       <Button size="sm" variant="outline" onClick={() => setCompareId(rev.id)}>
-                        Compare
+                        {t("history.compare")}
                       </Button>
                       <Button size="sm" onClick={() => handleRestore(rev.id)}>
-                        Restore
+                        {t("history.restore")}
                       </Button>
                     </div>
                   </div>
@@ -83,18 +84,18 @@ export function HistoryDialog() {
 
             {compareRevision && (
               <div className="rounded-lg border p-3">
-                <h4 className="mb-2 text-sm font-medium">Comparison</h4>
+                <h4 className="mb-2 text-sm font-medium">{t("history.comparison")}</h4>
                 <div className="space-y-3 text-sm">
                   <div>
-                    <p className="font-medium text-muted-foreground">Current title</p>
+                    <p className="font-medium text-muted-foreground">{t("history.currentTitle")}</p>
                     <p>{selectedNote.title}</p>
                   </div>
                   <div>
-                    <p className="font-medium text-muted-foreground">Revision title</p>
+                    <p className="font-medium text-muted-foreground">{t("history.revisionTitle")}</p>
                     <p>{compareRevision.title}</p>
                   </div>
                   <div>
-                    <p className="font-medium text-muted-foreground">Revision content</p>
+                    <p className="font-medium text-muted-foreground">{t("history.revisionContent")}</p>
                     <p className="max-h-[150px] overflow-auto whitespace-pre-wrap text-xs">
                       {compareRevision.content.replace(/<[^>]*>/g, "").slice(0, 500)}
                     </p>

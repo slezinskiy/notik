@@ -7,6 +7,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Input } from "@/components/ui/input";
 import { useNotesStore } from "@/lib/stores/notes-store";
 import { useUIStore } from "@/lib/stores/ui-store";
+import { useTranslation } from "@/lib/i18n/use-translation";
+import { getDateLocale } from "@/lib/i18n/date-locale";
 import { format } from "date-fns";
 
 export function SearchDialog() {
@@ -16,6 +18,8 @@ export function SearchDialog() {
   const setSelectedNoteId = useNotesStore((s) => s.setSelectedNoteId);
   const setSelectedDate = useNotesStore((s) => s.setSelectedDate);
   const [query, setQuery] = useState("");
+  const { t, locale } = useTranslation();
+  const dateLocale = getDateLocale(locale);
 
   const fuse = useMemo(
     () =>
@@ -43,13 +47,13 @@ export function SearchDialog() {
     <Dialog open={searchOpen} onOpenChange={setSearchOpen}>
       <DialogContent className="sm:max-w-[550px]">
         <DialogHeader>
-          <DialogTitle>Search Notes</DialogTitle>
+          <DialogTitle>{t("search.title")}</DialogTitle>
         </DialogHeader>
         <div className="relative">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
             className="pl-9"
-            placeholder="Search by title, content, or tags..."
+            placeholder={t("search.placeholder")}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             autoFocus
@@ -57,7 +61,7 @@ export function SearchDialog() {
         </div>
         <div className="max-h-[300px] overflow-auto">
           {results.length === 0 && query.trim() ? (
-            <p className="py-4 text-center text-sm text-muted-foreground">No results found</p>
+            <p className="py-4 text-center text-sm text-muted-foreground">{t("search.noResults")}</p>
           ) : (
             results.map(({ item }) => (
               <button
@@ -68,14 +72,14 @@ export function SearchDialog() {
               >
                 <p className="font-medium">{item.title}</p>
                 <p className="text-xs text-muted-foreground">
-                  {format(new Date(item.noteDate), "dd MMM yyyy")}
-                  {item.tags.length > 0 && ` • ${item.tags.map((t) => `#${t}`).join(" ")}`}
+                  {format(new Date(item.noteDate), "dd MMM yyyy", { locale: dateLocale })}
+                  {item.tags.length > 0 && ` • ${item.tags.map((tag) => `#${tag}`).join(" ")}`}
                 </p>
               </button>
             ))
           )}
         </div>
-        <p className="text-xs text-muted-foreground">Press Ctrl+K to open search</p>
+        <p className="text-xs text-muted-foreground">{t("search.shortcutHint")}</p>
       </DialogContent>
     </Dialog>
   );

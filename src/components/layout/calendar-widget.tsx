@@ -19,10 +19,16 @@ import { Button } from "@/components/ui/button";
 import { cn, toDateKey } from "@/lib/utils";
 import { useNotesStore } from "@/lib/stores/notes-store";
 import { useCalendarNoteCounts } from "@/lib/hooks/use-notes-selectors";
+import { useTranslation } from "@/lib/i18n/use-translation";
+import { getDateLocale } from "@/lib/i18n/date-locale";
 
-const WEEKDAYS = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+const WEEKDAYS_EN = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+const WEEKDAYS_UK = ["Нд", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
 
 export function CalendarWidget() {
+  const { t, locale } = useTranslation();
+  const weekdays = locale === "uk" ? WEEKDAYS_UK : WEEKDAYS_EN;
+  const dateLocale = getDateLocale(locale);
   const selectedDate = useNotesStore((s) => s.selectedDate);
   const setSelectedDate = useNotesStore((s) => s.setSelectedDate);
   const calendarNotes = useCalendarNoteCounts();
@@ -38,14 +44,14 @@ export function CalendarWidget() {
   return (
     <div className="p-4">
       <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-sm font-semibold">{format(selectedDate, "MMMM yyyy")}</h2>
+        <h2 className="text-sm font-semibold">{format(selectedDate, "MMMM yyyy", { locale: dateLocale })}</h2>
         <div className="flex gap-1">
           <Button
             variant="ghost"
             size="icon"
             className="h-7 w-7"
             onClick={() => setSelectedDate(subMonths(selectedDate, 1))}
-            aria-label="Previous month"
+            aria-label={t("calendar.prevMonth")}
           >
             <ChevronLeft className="h-4 w-4" />
           </Button>
@@ -54,7 +60,7 @@ export function CalendarWidget() {
             size="icon"
             className="h-7 w-7"
             onClick={() => setSelectedDate(addMonths(selectedDate, 1))}
-            aria-label="Next month"
+            aria-label={t("calendar.nextMonth")}
           >
             <ChevronRight className="h-4 w-4" />
           </Button>
@@ -62,7 +68,7 @@ export function CalendarWidget() {
       </div>
 
       <div className="grid grid-cols-7 gap-1 text-center">
-        {WEEKDAYS.map((day) => (
+        {weekdays.map((day) => (
           <div key={day} className="py-1 text-xs font-medium text-muted-foreground">
             {day}
           </div>

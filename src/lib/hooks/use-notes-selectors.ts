@@ -32,9 +32,9 @@ export function useFilteredNotes(): Note[] {
       const q = searchQuery.toLowerCase();
       filtered = filtered.filter(
         (n) =>
-          n.title.toLowerCase().includes(q) ||
-          n.content.toLowerCase().includes(q) ||
-          n.tags.some((t) => t.toLowerCase().includes(q))
+          (n.title ?? "").toLowerCase().includes(q) ||
+          (n.content ?? "").toLowerCase().includes(q) ||
+          (n.tags ?? []).some((t) => t.toLowerCase().includes(q))
       );
     }
 
@@ -73,8 +73,8 @@ export function useDailyStats(): DailyStats {
     let wordCount = 0;
 
     for (const note of filtered) {
-      note.tags.forEach((t) => tags.add(t));
-      wordCount += countWords(note.content);
+      (note.tags ?? []).forEach((t) => tags.add(t));
+      wordCount += countWords(note.content ?? "");
     }
 
     return {

@@ -6,8 +6,10 @@ import { CalendarWidget } from "./calendar-widget";
 import { NotesList } from "./notes-list";
 import { useUIStore } from "@/lib/stores/ui-store";
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "@/lib/i18n/use-translation";
 
 export function Sidebar() {
+  const { t } = useTranslation();
   const sidebarOpen = useUIStore((s) => s.sidebarOpen);
   const setSidebarOpen = useUIStore((s) => s.setSidebarOpen);
 
@@ -31,14 +33,14 @@ export function Sidebar() {
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground font-bold text-sm">
               N
             </div>
-            <span className="text-lg font-bold">Notik</span>
+            <span className="text-lg font-bold">{t("common.appName")}</span>
           </div>
           <Button
             variant="ghost"
             size="icon"
             className="md:hidden"
             onClick={() => setSidebarOpen(false)}
-            aria-label="Close sidebar"
+            aria-label={t("sidebar.closeSidebar")}
           >
             <X className="h-4 w-4" />
           </Button>

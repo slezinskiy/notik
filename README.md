@@ -15,6 +15,7 @@ A production-ready Progressive Web Application for daily notes with calendar org
 - **Version history** — Every edit saved; compare and restore revisions
 - **Export/Import** — Markdown files (`DD_MM_YYYY.md`) and ZIP archives
 - **Dark/Light mode** — System-aware theming
+- **Localization** — Ukrainian and English (UI, dates, calendar)
 - **Keyboard shortcuts** — Ctrl+N (new), Ctrl+S (sync), Ctrl+K (search)
 
 ## Tech Stack
@@ -151,6 +152,26 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000), register an account, and start taking notes.
+
+## Localization
+
+Supported languages: **Ukrainian (uk)** and **English (en)**.
+
+| File | Purpose |
+|------|---------|
+| `src/locales/uk.json` | Ukrainian translations |
+| `src/locales/en.json` | English translations |
+| `src/lib/i18n/config.ts` | Locale config and `translate()` |
+| `src/lib/stores/locale-store.ts` | Persisted locale preference |
+
+Default language is Ukrainian. The app detects browser language on first visit. Switch language via the globe icon in the header, or EN/UK buttons on login/register pages.
+
+```tsx
+import { useTranslation } from "@/lib/i18n/use-translation";
+
+const { t, locale } = useTranslation();
+t("auth.signIn"); // "Увійти" or "Sign in"
+```
 
 ## Docker Deployment
 

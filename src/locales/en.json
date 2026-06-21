@@ -1,0 +1,119 @@
+{
+  "common": {
+    "appName": "Notik",
+    "notes": "notes",
+    "tags": "tags",
+    "words": "words",
+    "install": "Install",
+    "untitled": "Untitled",
+    "saving": "Saving...",
+    "close": "Close"
+  },
+  "auth": {
+    "welcome": "Welcome to Notik",
+    "tagline": "Your daily notes companion",
+    "email": "Email",
+    "password": "Password",
+    "name": "Name",
+    "signIn": "Sign in",
+    "signingIn": "Signing in...",
+    "signOut": "Sign out",
+    "register": "Register",
+    "createAccount": "Create Account",
+    "creating": "Creating...",
+    "createAccountButton": "Create account",
+    "startTakingNotes": "Start taking notes with Notik",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "invalidCredentials": "Invalid email or password",
+    "registrationFailed": "Registration failed"
+  },
+  "sidebar": {
+    "searchPlaceholder": "Search notes...",
+    "notesTab": "Notes",
+    "trashTab": "Trash",
+    "trashEmpty": "Trash is empty",
+    "noNotesForDay": "No notes for this day",
+    "restore": "Restore",
+    "closeSidebar": "Close sidebar"
+  },
+  "calendar": {
+    "prevMonth": "Previous month",
+    "nextMonth": "Next month"
+  },
+  "editor": {
+    "noNoteSelected": "No note selected",
+    "selectOrCreate": "Select a note or create a new one",
+    "titlePlaceholder": "Note title",
+    "contentPlaceholder": "Start writing...",
+    "addTag": "Add tag...",
+    "deleteNote": "Delete note"
+  },
+  "toolbar": {
+    "bold": "Bold",
+    "italic": "Italic",
+    "underline": "Underline",
+    "strikethrough": "Strikethrough",
+    "heading1": "Heading 1",
+    "heading2": "Heading 2",
+    "bulletList": "Bullet list",
+    "numberedList": "Numbered list",
+    "quote": "Quote",
+    "link": "Link",
+    "image": "Image",
+    "codeBlock": "Code block",
+    "preview": "Toggle preview",
+    "linkPrompt": "Enter URL"
+  },
+  "header": {
+    "openSidebar": "Open sidebar",
+    "versionHistory": "Version history",
+    "exportNotes": "Export notes",
+    "toggleTheme": "Toggle theme",
+    "changeLanguage": "Change language"
+  },
+  "search": {
+    "title": "Search Notes",
+    "placeholder": "Search by title, content, or tags...",
+    "noResults": "No results found",
+    "shortcutHint": "Press Ctrl+K to open search"
+  },
+  "export": {
+    "title": "Export / Import",
+    "description": "Export notes as markdown or import from files",
+    "scope": "Export scope",
+    "scopeNote": "Note",
+    "scopeDay": "Day",
+    "scopeMonth": "Month",
+    "scopeAll": "All",
+    "exportButton": "Export",
+    "import": "Import"
+  },
+  "history": {
+    "title": "Version History",
+    "selectNote": "Select a note to view history",
+    "noRevisions": "No revisions yet",
+    "compare": "Compare",
+    "restore": "Restore",
+    "comparison": "Comparison",
+    "currentTitle": "Current title",
+    "revisionTitle": "Revision title",
+    "revisionContent": "Revision content"
+  },
+  "pwa": {
+    "installTitle": "Install Notik",
+    "installDescription": "Add to your home screen for offline access"
+  },
+  "offline": {
+    "title": "You're offline",
+    "description": "Notik works offline. Your notes are saved locally and will sync when you reconnect.",
+    "goToNotes": "Go to Notes"
+  },
+  "fab": {
+    "createNote": "Create new note"
+  },
+  "language": {
+    "en": "English",
+    "uk": "Ukrainian"
+  }
+}
