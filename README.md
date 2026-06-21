@@ -2,8 +2,7 @@
 
 A production-ready Progressive Web Application for daily notes with calendar organization, offline-first sync, and markdown export.
 
-![Notik](public/icons/icon.svg)
-
+<img src="public/icons/icon.svg" alt="Notik" width="150" />
 ## Features
 
 - **Calendar-based organization** — Notes grouped by day with visual calendar dots
